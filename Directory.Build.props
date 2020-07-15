@@ -1,0 +1,5 @@
+<Project>
+    <PropertyGroup>
+        <PluginOutputPath>$(MSBuildThisFileDirectory)PluginTests\Client\bin\Debug\netstandard2.1\wwwroot\_framework\_bin</PluginOutputPath>
+    </PropertyGroup>
+</Project>

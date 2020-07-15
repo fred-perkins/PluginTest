@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+      <OutDir>$(PluginOutputPath)</OutDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PluginHost\PluginHost.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,50 @@
+﻿@page "/"
+@inject HttpClient Http
+
+<h3>Plugins</h3>
+<input type="button" @onclick="LoadStandalonePlugin" value="Load 'StandalonePlugin' Plugin" />
+<input type="button" @onclick="LoadInnerPlugin" value="Load 'InnerPlugin' Plugin" />
+
+@code {
+    private async Task LoadStandalonePlugin()
+    {
+        try
+        {
+            var context = new PluginAssemblyLoadContext();
+            var loader = new PluginLoader(context);
+
+            var bytes = await Http.GetByteArrayAsync("_framework/_bin/StandalonePlugin.dll");
+            var pdb = await Http.GetByteArrayAsync("_framework/_bin/StandalonePlugin.pdb");
+
+            var plugin = loader.LoadPlugin(bytes, pdb);
+
+            //DEBUG HERE - Unable to step into or set breakpoints in executable code inside.
+            plugin.Initialise();
+            plugin.Dispose();
+
+        }
+        catch (Exception e)
+        {
+            await Console.Error.WriteAsync($"{e.Message},\r\n {e.StackTrace}");
+        }
+    }
+
+    private async Task LoadInnerPlugin()
+    {
+        try
+        {
+            var context = new PluginAssemblyLoadContext();
+            var loader = new PluginLoader(context);
+
+            var plugin = loader.LoadPlugin(typeof(Program).Assembly);
+
+            plugin.Initialise();
+
+            plugin.Dispose();
+        }
+        catch (Exception e)
+        {
+            await Console.Error.WriteAsync($"{e.Message},\r\n {e.StackTrace}");
+        }
+    }
+}
