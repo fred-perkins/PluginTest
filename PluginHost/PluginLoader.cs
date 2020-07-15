@@ -13,6 +13,7 @@ namespace PluginHost
             this.assemblyLoadContext = assemblyLoadContext;
         }
 
+        //Try referencing and loading by name.
         public IPlugin LoadPlugin(string name)
         {
             AssemblyName assemblyName = new AssemblyName(name);
